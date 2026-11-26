@@ -21,7 +21,7 @@ create policy conector_codigos_leitura on conector_codigos for select
 
 -- Gera um código novo pra quem está logado (o antigo para de valer). Mostra uma vez só.
 create or replace function conector_gerar(p_org uuid) returns text
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, extensions as $$
 declare v_membro uuid; v_codigo text := encode(gen_random_bytes(24), 'hex');
 begin
   select id into v_membro from membros where org_id = p_org and user_id = auth.uid() and ativo;
@@ -33,7 +33,7 @@ end; $$;
 
 -- Usado só pelo servidor (chave de serviço) pra saber quem está do outro lado.
 create or replace function conector_dono(p_codigo text, out org_id uuid, out membro_id uuid, out user_id uuid, out papel text, out nome text)
-language sql security definer set search_path = public as $$
+language sql security definer set search_path = public, extensions as $$
   update conector_codigos c set ultimo_uso_em = now()
   from membros m
   where c.hash = encode(digest(p_codigo, 'sha256'), 'hex') and c.ativo and m.id = c.membro_id and m.ativo

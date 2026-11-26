@@ -3,7 +3,7 @@
 | Fase | O que | Estado | Depende de |
 |---|---|---|---|
 | 1 | Base de dados (schema, segurança, testes) | Pronta (26/11/2026) | nada |
-| 2 | Hub: Hoje, CRM (quadro do funil), Clientes, Projetos, Tarefas, Financeiro, Ajustes | A fazer | repositório + projeto Supabase |
+| 2 | Hub: Hoje, CRM (quadro do funil), Clientes, Projetos, Tarefas, Financeiro, Ajustes | Primeira versão pronta (26/11/2026), falta testar com o banco no ar | projeto Supabase |
 | 3 | Site/portfólio + pré-briefing ligado ao CRM | A fazer | logo, fotos, projetos autorizados, domínio |
 | 4 | Propostas e contratos com a identidade dela (PDF + página da proposta + assinatura) | A fazer | modelo de contrato atual dela, dados do contrato |
 | 5 | Conector MCP + skills do Claude | A fazer | fases 2 e 4; Luma com conta no Claude |

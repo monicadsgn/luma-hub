@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import "@fontsource/montserrat/400.css";
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/600.css";
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+
+/* ════════════════════════════════════════════════════════════════════════
+   TOKENS DA LUMA: o único lugar pra trocar cor e fonte.
+   Base: guia de 2025 (Areia #c0a793, Caramelo #a86539, Preto #181515,
+   Branco #fffaf5; título serifado, texto sem serifa). Confirmar com a logo.
+   Componentes só usam os nomes abaixo (bg-marca, text-suave...).
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  --marca: #a86539;        /* caramelo */
+  --marca-forte: #7f4a27;
+  --areia: #c0a793;
+  --areia-suave: #efe6dc;
+  --fundo: #fffaf5;        /* branco da marca */
+  --superficie: #ffffff;
+  --linha: #e8ddd1;
+  --texto: #181515;        /* preto da marca */
+  --suave: #6e625a;
+  --ok: #4c7743;
+  --aviso: #9a6a10;
+  --erro: #b3422e;
+  --fonte-titulo: "Playfair Display", Georgia, serif;
+  --fonte-texto: "Montserrat", system-ui, sans-serif;
+  --raio: 1rem;
+}
+
+@theme inline {
+  --color-marca: var(--marca);
+  --color-marca-forte: var(--marca-forte);
+  --color-areia: var(--areia);
+  --color-areia-suave: var(--areia-suave);
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-linha: var(--linha);
+  --color-texto: var(--texto);
+  --color-suave: var(--suave);
+  --color-ok: var(--ok);
+  --color-aviso: var(--aviso);
+  --color-erro: var(--erro);
+  --font-titulo: var(--fonte-titulo);
+  --font-texto: var(--fonte-texto);
+  --radius-card: var(--raio);
+}
+
+body { background: var(--fundo); color: var(--texto); font-family: var(--fonte-texto); }
+h1, h2, h3 { font-family: var(--fonte-titulo); }

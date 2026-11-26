@@ -9,7 +9,13 @@ comercial, com o site/portfólio ligado ao CRM e um conector pro Claude.
 - Skills do Claude (plano): `skills/README.md`
 
 ## Estado
-Fase 1 (base de dados) pronta e testada. Telas ainda não começaram.
+Fase 1 (base de dados) pronta e testada. Fase 2 (telas do hub) com a primeira versão. Como colocar no ar: `docs/SETUP.md`.
+
+```
+npm install
+npm run dev      # precisa do .env.local (ver .env.example)
+npm test         # testes do app
+```
 
 ## Testar o schema
 Precisa de um Postgres local (16+):

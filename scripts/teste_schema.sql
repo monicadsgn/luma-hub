@@ -1,7 +1,5 @@
 -- Teste de fumaça do schema: roda depois das migrations. Para no primeiro erro.
 \set ON_ERROR_STOP on
-grant select, insert, update, delete on all tables in schema public to authenticated;
-grant usage on all sequences in schema public to authenticated;
 
 insert into auth.users values ('00000000-0000-0000-0000-00000000000a', 'luma@teste'), ('00000000-0000-0000-0000-00000000000b', 'apoio@teste');
 insert into organizacoes (id, nome) values ('11111111-1111-1111-1111-111111111111', 'Luma Almeida Arquitetura');
@@ -11,8 +9,14 @@ insert into membros (org_id, user_id, nome, email, papel) values
 select pre_briefing_configurar('11111111-1111-1111-1111-111111111111', 'segredo-de-teste');
 insert into estudio (org_id, nome_publico) values ('11111111-1111-1111-1111-111111111111', 'Luma (teste)');
 
--- 1) Visitante anônimo: abre o pré-briefing, para no meio; outro manda até o fim.
+-- 0) Visitante anônimo não chama o pré-briefing direto (só a rota do servidor)
 set role anon;
+do $$ begin perform pre_briefing_enviar('segredo-de-teste', '{}'); raise exception 'anon chamou direto';
+exception when insufficient_privilege then null; end $$;
+reset role;
+
+-- 1) Rota do servidor: abre o pré-briefing, para no meio; outro manda até o fim.
+set role service_role;
 select pre_briefing_passo('segredo-de-teste', 'aaaaaaaa-0000-0000-0000-000000000001', 'servico', 'hero', '{"utm_source":"instagram"}');
 select pre_briefing_passo('segredo-de-teste', 'aaaaaaaa-0000-0000-0000-000000000002', 'servico', 'portfolio', null);
 select pre_briefing_passo('segredo-de-teste', 'aaaaaaaa-0000-0000-0000-000000000002', 'contato', 'portfolio', null);
@@ -22,6 +26,8 @@ select pre_briefing_enviar('segredo-de-teste', '{"nome":"Cliente Teste","telefon
 -- segredo errado é barrado
 do $$ begin perform pre_briefing_enviar('errado', '{"nome":"x","telefone":"81999990000"}'); raise exception 'deveria ter barrado';
 exception when others then if sqlerrm not like '%não configurado%' then raise; end if; end $$;
+reset role;
+set role anon;
 -- anônimo não lê tabela nenhuma
 do $$ begin perform 1 from leads; raise exception 'anon leu leads'; exception when insufficient_privilege then null; end $$;
 select jsonb_array_length(portfolio_publico()) = 0 as portfolio_vazio;
