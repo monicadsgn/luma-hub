@@ -14,7 +14,7 @@ projeto Supabase de outro sistema.
      select '<ORG>', id, 'Luma', email, 'admin' from auth.users where email = '<email da Luma>';
    select pre_briefing_configurar('<ORG>', '<um segredo longo>');
    ```
-5. Opcional: `supabase/sugestoes_servicos.sql` (troque `<ORG>`).
+5. Ou, no lugar do passo 4: `supabase/primeiro_acesso.sql` (troque só o e-mail). Faz tudo de uma vez.
 
 ## 2. Vercel
 Importar `monicadsgn/luma-hub` e cadastrar as variáveis de `.env.example`
