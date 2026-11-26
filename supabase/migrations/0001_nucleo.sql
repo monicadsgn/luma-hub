@@ -12,6 +12,7 @@
 --   • toda alteração vai para `auditoria` por trigger (carimbar + auditar)
 -- ════════════════════════════════════════════════════════════════════════════
 
+-- No Supabase o pgcrypto já vem no schema "extensions". Fora dele (teste local), cria aqui.
 create extension if not exists pgcrypto;
 
 -- ─── Organização e acessos ──────────────────────────────────────────────────

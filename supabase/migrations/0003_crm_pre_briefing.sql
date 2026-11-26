@@ -120,7 +120,7 @@ create table pre_briefing_limite (
 alter table pre_briefing_limite enable row level security;
 
 create or replace function pre_briefing_org(p_segredo text) returns uuid
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, extensions as $$
 declare v_org uuid;
 begin
   select org_id into v_org from pre_briefing_config
@@ -131,7 +131,7 @@ end; $$;
 
 -- Liga o pré-briefing (rodar uma vez, pelo SQL Editor, com o mesmo valor da variável PRE_BRIEFING_SEGREDO).
 create or replace function pre_briefing_configurar(p_org uuid, p_segredo text) returns void
-language sql security definer set search_path = public as $$
+language sql security definer set search_path = public, extensions as $$
   insert into pre_briefing_config (id, org_id, segredo_hash)
   values (true, p_org, encode(digest(p_segredo, 'sha256'), 'hex'))
   on conflict (id) do update set org_id = excluded.org_id, segredo_hash = excluded.segredo_hash, atualizado_em = now();
